@@ -7,8 +7,25 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.white10,
-      title: const Text("Mi App con Header"),
-      centerTitle: true,
+      title: const Text("HOLA, KATY"),
+      centerTitle: false,
+      automaticallyImplyLeading: false,
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.search),
+          iconSize: 30,
+          onPressed: () {
+            // Handle notifications action
+          },
+        ),
+        IconButton(
+          icon: const Icon(Icons.person_outlined),
+          iconSize: 32,
+          onPressed: () {
+            // Handle settings action
+          },
+        ),
+      ],
     );
   }
 

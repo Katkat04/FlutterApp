@@ -11,8 +11,21 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
         useMaterial3: true,
+        fontFamily: 'AdihausDIN',
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.white10,
+          titleTextStyle: TextStyle(
+            fontFamily: 'AdihausDIN',
+            color: Colors.black,
+            fontSize: 22,
+            fontWeight: FontWeight.w600,
+          ),
+          iconTheme: IconThemeData(
+            color: Colors.black,
+          ),
+        ),
       ),
-      home: const LoginScreen(),
+      home: const  LoginScreen()
     );
   }
 }

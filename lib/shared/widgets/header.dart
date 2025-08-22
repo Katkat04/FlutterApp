@@ -9,7 +9,17 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.white10,
       title: const Text("HOLA, KATY"),
       centerTitle: false,
-      automaticallyImplyLeading: false,
+      automaticallyImplyLeading: false, //flechaatras
+      elevation: 0.0,
+
+      bottom: PreferredSize(
+        preferredSize: const Size.fromHeight(1.0),
+        child: Container(
+          color: Colors.black87,
+          height: 0.1,
+        ),
+      ),
+
       actions: [
         IconButton(
           icon: const Icon(Icons.search),

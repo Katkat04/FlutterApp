@@ -20,31 +20,31 @@ class _PrincipalCarouselState extends State<PrincipalCarousel> {
       subtitle: "",
       tag: "DESTACADO",
       button: "COMPRAR AHORA",
-      buttonb:  "normal",
+      buttonb: "normal",
     ),
     SlideData(
       imageUrl: "https://picsum.photos/401/200",
-      title: "Segunda Slide",
-      subtitle: "Imagen del centro",
+      title: "ESTO ES RUNNING",
+      subtitle: "Último lanzamiento",
       tag: "ORIGINALS",
       button: "DESCUBRE MÁS",
-      buttonb:  "normal",
+      buttonb: "normal",
     ),
     SlideData(
       imageUrl: "https://picsum.photos/402/200",
-      title: "Tercera Slide",
-      subtitle: "Otra imagen central",
+      title: "ESTO ES RUNNING",
+      subtitle: "Últimas tendencias",
       tag: "NUEVO",
       button: "VER MÁS",
-      buttonb:  "normal",
+      buttonb: "normal",
     ),
     SlideData(
       imageUrl: "https://picsum.photos/403/200",
-      title: "Última Slide",
-      subtitle: "Esta es la última imagen",
+      title: "ESTO ES RUNNING",
+      subtitle: "Productos destacados",
       tag: "DESTACADO",
       button: "COMPRAR AHORA",
-      buttonb:  "normal",
+      buttonb: "normal",
     ),
   ];
 
@@ -64,10 +64,10 @@ class _PrincipalCarouselState extends State<PrincipalCarousel> {
                 height: 550,
                 enlargeCenterPage: false,
                 enableInfiniteScroll: false,
-                viewportFraction: 0.8,
+                viewportFraction: 0.9,
                 aspectRatio: 2.0,
                 initialPage: 0,
-                padEnds: false,
+                padEnds: true,
                 onPageChanged: (index, reason) {
                   setState(() {
                     currentIndex = index;
@@ -88,16 +88,9 @@ class _PrincipalCarouselState extends State<PrincipalCarousel> {
   }
 
   Widget _buildSlide(int index) {
-    bool isFirst = index == 0;
-    bool isLast = index == slideData.length - 1;
-    bool isCenter = !isFirst && !isLast;
 
     return Container(
       width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.only(
-        left: isFirst ? 20.0 : 0.0,
-        right: isLast ? 20.0 : 0.0,
-      ),
       child: Stack(
         children: [
           // Imagen
@@ -125,7 +118,7 @@ class _PrincipalCarouselState extends State<PrincipalCarousel> {
                   Colors.transparent,
                   Colors.black,
                 ],
-                stops: [0.5, 1.0],
+                stops: [0.3, 1.0],
               ),
             ),
           ),
@@ -151,11 +144,11 @@ class _PrincipalCarouselState extends State<PrincipalCarousel> {
           ),
           //Botón
           Positioned(
-            bottom: 26,
+            bottom: 35,
             right: 0,
             left: 0,
             child: Padding(
-              padding: EdgeInsets.all(18),
+              padding: EdgeInsets.only(left: 28, right: 28),
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 6, vertical: 0),
                 decoration: BoxDecoration(
@@ -177,7 +170,6 @@ class _PrincipalCarouselState extends State<PrincipalCarousel> {
                           letterSpacing: 1.5,
                         ),
                       ),
-                      //SizedBox(width: 90),
                       SvgPicture.string(
                         '''<svg width="28" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M4 12H20M20 12L16 8M20 12L16 16" stroke="#000000" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -187,17 +179,17 @@ class _PrincipalCarouselState extends State<PrincipalCarousel> {
                       ),
                     ],
                   ),
+                ),
               ),
             ),
           ),
-          ),
           //BORDE BOTON
           Positioned(
-            bottom: 25,
+            bottom: 30,
             right: 0,
             left: 10,
             child: Padding(
-              padding: EdgeInsets.all(13),
+              padding: EdgeInsets.only(left: 28, right: 23),
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 6, vertical: 6),
                 decoration: BoxDecoration(
@@ -225,68 +217,76 @@ class _PrincipalCarouselState extends State<PrincipalCarousel> {
     );
   }
 
-  Widget _buildTextOverlay() {
-    return Positioned.fill(
-      child: Container(
-        child: Stack(
-          children: slideData.asMap().entries.map((entry) {
-            int index = entry.key;
-            SlideData data = entry.value;
+Widget _buildTextOverlay() {
+  return Positioned.fill(
+    child: Container(
+      child: Stack(
+        children: slideData.asMap().entries.map((entry) {
+          int index = entry.key;
+          SlideData data = entry.value;
+          double relativePosition = index - pageValue;
+          double textOffset = (relativePosition * MediaQuery.of(context).size.width * 0.7);
+          if (relativePosition < 0){
+            textOffset = textOffset.clamp(-MediaQuery.of(context).size.width * 0.5, 0);
+          }
 
-            double offset = (index - pageValue) * 0.8;
+          CrossAxisAlignment alignment = CrossAxisAlignment.start;
+          if (index == slideData.length - 1 && pageValue >= slideData.length - 1) {
+            alignment = CrossAxisAlignment.end;
+          } else if (index == 0 && pageValue <= 0) {
+            alignment = CrossAxisAlignment.start;
+          } else {
+            alignment = CrossAxisAlignment.start;
+          }
 
-            return AnimatedPositioned(
-              duration: Duration(milliseconds: 100),
-              bottom: 110,
-              left: MediaQuery.of(context).size.width * 0.1 + (offset * MediaQuery.of(context).size.width * 0.8),
-              right: -MediaQuery.of(context).size.width * 0.1 + (-offset * MediaQuery.of(context).size.width * 0.8),
-              child: AnimatedOpacity(
-                duration: Duration(milliseconds: 200),
-                opacity: (index - pageValue).abs() < 0.5 ? 1.0 : 0.3,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                    Container(
-                      color: Colors.white,
-                      padding: EdgeInsets.only(left: 8, right: 8),
-                      child: Text(
-                        data.title,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.w600,
-                          height: 3
-                        ),
+          return Positioned(
+            bottom: 110,
+            left: relativePosition.abs() < 0.001 ? 0 : MediaQuery.of(context).size.width * 0.1 + textOffset,
+            width: relativePosition.abs() < 0.001 ? MediaQuery.of(context).size.width : MediaQuery.of(context).size.width * 0.8,
+            child: Container(
+              alignment: relativePosition.abs() < 0.001 ? Alignment.center : Alignment.centerLeft,
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: alignment,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    color: Colors.white,
+                    padding: EdgeInsets.only(left: 8, right: 8),
+                    child: Text(
+                      data.title,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.w600,
+                        height: 3,
                       ),
                     ),
-                      SizedBox(height: 8),
-                      Text(
-                        data.subtitle,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          shadows: [
-                            Shadow(
-                              offset: Offset(0, 1),
-                              blurRadius: 3,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
                   ),
-                ),
+                  SizedBox(height: 8),
+                  Text(
+                    data.subtitle,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      shadows: [
+                        Shadow(
+                          offset: Offset(0, 1),
+                          blurRadius: 3,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            );
-          }).toList(),
-        ),
+            ),
+          );
+        }).toList(),
       ),
-    );
-  }
+    ),
+  );
+}
 
   Color _getTagColor(String tag) {
     switch (tag) {
@@ -300,7 +300,6 @@ class _PrincipalCarouselState extends State<PrincipalCarousel> {
         return Colors.black;
     }
   }
-
 }
 
 class SlideData {

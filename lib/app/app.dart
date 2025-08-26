@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: 'AdihausDIN',
         appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white10,
+          backgroundColor: Colors.white,
           titleTextStyle: TextStyle(
             fontFamily: 'AdihausDIN',
             color: Colors.black,
@@ -103,7 +103,6 @@ class _UppercaseTextWrapper extends StatelessWidget {
   }
 }
 
-/// Un InheritedWidget para interceptar Text widgets
 class _TextUppercaseInherited extends InheritedWidget {
   const _TextUppercaseInherited({required super.child});
 

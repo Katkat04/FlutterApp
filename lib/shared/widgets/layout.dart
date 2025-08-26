@@ -10,9 +10,10 @@ class MainLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const Header(),
+      backgroundColor: Colors.white,
       body: child,
       bottomNavigationBar: Container(
-        color: Colors.indigo,
+        color: Colors.white,
         padding: const EdgeInsets.all(16),
         child: const Text(
           '© 2025 Mi App',
